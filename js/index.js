@@ -365,7 +365,7 @@ function tableToJson( input, plane ){
 	for( var y=0;y<H;y++ ){
 	    used[x][y] = new Array( input.M );
 	    for( var i=0;i<input.M;i++ )
-		used[x][y][i] = true;
+		used[x][y][i] = false;
 	}
     }
 
