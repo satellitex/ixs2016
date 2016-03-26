@@ -318,33 +318,42 @@ function tableToJson( input, plane ){
     for( x=0;x<W;x++ ){
 	for( y=0;y<H;y++ ){
 	    if( plane.kind[x][y] == 1 ){//素材である。
-
-		var move;
+		var move = new Array();
+		move["distribute"] = {
+		    "from": {
+                        "container": "plate", 
+                        "location": alp[x]+y.toString()
+		    },
+		    "to":[
+			
+			]
+		};
+		var now_v = plane.need[x][y];
 		
 		for( var x2=0;x2<W;x2++ ){
 		    for( var y2=0;y2<H;y2++ ){
 			if( used[x2][y2] ) continue;
 			if( plane.kind[x2][y2] == 2 ){
-			    if( isIncludeSid( input.M, input.value[plane.fie[x2][y2]], plane.fie[x][y] ) ){
-				
-				
-			    }
-			    
+			    if( input.value[plane.fie[x2][y2]][plane.fie[x][y]] > 0 &&
+			      now_v - input.value[plane.fie[x2][y2]][plane.fie[x][y]] >= 0 ){
+				  var tot={
+				      "container": "plate", 
+                                      "location": alp[x2]+y2.toString(), 
+                                      "volume": input.value[plane.fie[x2][y2]][plane.fie[x][y]], 
+                                      "touch-tip": false
+				  };
+				  move.distribute.to.append( tot );
+			      }
 			}
 		    }
 		}
 		
-		
+		result.instructions.groups.append( move );
 	    }
 	}
     }
+    
+    return result;
 }
 
-function isIncludeSid( M, mix_v, sid ){
-    for( var i=0;i<M;i++ ){
-	if( mix_v[i]  > 0 && i == sid )
-	    return true;
-    }
-    return true;
-}
  
