@@ -25,7 +25,7 @@ $(document).ready(function() {
 	});
 	$("button.material").click(function(){
 		$("table.material").append("<tr><td>"+$("input.material").val()+"</td></tr>");
-		$("div.product").append("<div class='col-sm-4'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+		$("div.product_name").append("<div class='col-sm-4'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
 
 		input.sname.push($("input.material").val());
 		input.color.push(color++);

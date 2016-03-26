@@ -1,9 +1,56 @@
-th{
+html {
+	font-size: 20px;
+}
+th {
 	width: 25px;
 	height: 25px;
 }
-
-
+.project_left {
+	float: left;
+}
+.project_right {
+	float: right;
+}
+button.add {
+    background: #4167fc;
+    border: 1px solid #e7e7e7;
+    border-radius: 5px;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 0 10px;
+    font-size: 12px;
+    font-family: "Tron-Normal";
+    color: #FDFDFD;
+    background: #0f3ffb;
+    cursor: pointer;
+}
+button.code {
+	width: 300px;
+	height: 40px;
+}
+.button_wrapper{
+   text-align:center;
+}
+div.plate {
+    font-size: 1rem;
+}
+div.question {
+	width: 100%;
+    font-family: "Tron-Normal";
+	box-sizing: border-box;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    font-size: 1rem;
+    border: 1px solid #e7e7e7;
+    padding: 10px;
+    background: #F8F8F8;
+    color: #222222;
+    margin-top: 25px;
+    width: 100%;
+    height: auto;
+}
 nav {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

@@ -14,62 +14,72 @@
 <body>
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <div class="col-sm-2"></div>
-    <dvi class="col-sm-8">
-        <nav>
-            <a class="nav strong" href="#">OpenTrons Editor</a>
-            <a class="nav right strong" href="http://www.opentrons.com">OpenTrons</a>
-        </nav>
+    <div class="col-sm-8">
+        <div>
+            <nav>
+                <a class="nav strong" href="#">OpenTrons Editor</a>
+                <a class="nav right strong" href="http://www.opentrons.com">OpenTrons</a>
+            </nav>
 
-        <div class="controll">
-            <dvi class="col-sm-2">コントロール</dvi>
-                <select class="controll">
-            </select>
-        </div>
-
-        <div class="material">
-            <dvi class="col-sm-2">原料 : </dvi>
-            <div class="col-sm-3">
-                <input type='text' class='material' name='namae' maxlength='20'>
+            <div class="question">
+                <div class="col-sm-2 project_left">プロジェクト名</div>
+                <button type="button" class="download project_right">ダウンロード</button>
+                <div class="project_right">.json</div>
+                <input type='text' class='project_right' name='namae' maxlength='20'>
             </div>
-            <button type="button" class="btn material">追加</button>
-            <div class="col-sm-8"></div>
-        </div>
-        <div class="col-sm-12">
-            <table class="material col-sm-12" border=1>
-                <tbody class="material">
-                    <tr><th>薬品名</th></tr>
-                </tbody>
-            </table>
-        </div>
 
-        <div class="product">
-            <dvi class="col-sm-12 product">
-                生成物
-            </dvi>
-        </div>
-        <div class="col-sm-12"><div class="material_name">数量</div><input class="material_value" type='text' name='namae' maxlength='20'>個<button type="button" class="btn product">Add</button>
-        </div>
-        <div class="col-sm-12">
-            <table class="product col-sm-12" border=1>
-                <tbody class="product">
-                    <tr><th>生成物リスト</th></tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="controll question">
+                <div class="col-sm-2">コントロール</div>
+                    <select class="controll">
+                </select>
+            </div>
 
-        <div class="col-sm-12">
-            <button type="button" class="btn code">コード生成</button>
+            <div class="material question">
+                <div class="col-sm-2">原料 : </div>
+                <div class="col-sm-3">
+                    <input type='text' class='material' name='namae' maxlength='20'>
+                </div>
+                <button type="button" class="material add">追加</button>
+                <div class="col-sm-8"></div>
+                <div class="col-sm-12">
+                    <table class="material col-sm-12" border=1>
+                        <tbody class="material">
+                            <tr><th>薬品名</th></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="product question">
+                <div class="product_name">
+                    <div class="col-sm-12 product">
+                        生成物
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="material_name">数量</div><input class="material_value" type='text' name='namae' maxlength='20'>個<button type="button" class="add product">追加</button>
+                </div>
+                <div class="col-sm-12">
+                    <table class="product col-sm-12" border=1>
+                        <div>生成物リスト</div>
+                        <tbody class="product">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-12 question button_wrapper">
+                <button type="button" class="code add">コード生成</button>
+            </div>
+            <div class="col-sm-12 question">
+                <div class="plate">プレート</div>
+                <table border=1>
+                    <tbody class="plate">
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-sm-12">
-            <table border=1>
-                <tbody class="plate">
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-12">
-            <button type="button" class="btn download">ダウンロード</button>
-        </div>
-    </dvi>
+    </div>
     <div class="col-sm-2"></div>
 </body>
 </html>
