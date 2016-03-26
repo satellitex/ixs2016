@@ -50,12 +50,11 @@ $(document).ready(function() {
 		input.N = Number($("select.controll").val());
 		console.log(input);
 
-		//solve()
-		console.log(solve(input));
+	    //solve()
+	    var xxx = solve(input);
+	    console.log( tableToJson(input,xxx) );
 	});
 });
-
-
 
 
 const POT_VOLUME_MAX = 300; //試験官のサイズ300μl
@@ -160,7 +159,6 @@ function solve(input){
     x=0;
     while( cnt > 0 ){
 	for( i = 0; i < des1 && cnt > 0; i++){
-	    console.log( i );
 	    result.kind[x][i] = 0;
 	    result.fie[x][i] = 0;
 	    cnt--;	    
@@ -301,8 +299,7 @@ function tableToJson( input, plane ){
 		"instructions": [
 		    {
 			"tool": "p1000", 
-			"groups": [
-			]
+			"groups": []
 		    }
 		]
 	    };
@@ -311,22 +308,22 @@ function tableToJson( input, plane ){
     for( var x = 0; x<W; x++ ){
 	used[x] = new Array(H);
 	for( var y=0;y<H;y++ )
-	    used[x][y] = true;
+	    used[x][y] = false;
     }
 
     var alp="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for( x=0;x<W;x++ ){
 	for( y=0;y<H;y++ ){
 	    if( plane.kind[x][y] == 1 ){//素材である。
-		var move = new Array();
-		move["distribute"] = {
-		    "from": {
-                        "container": "plate", 
-                        "location": alp[x]+y.toString()
-		    },
-		    "to":[
-			
+		var move = {
+		    "distribute": {
+			"from": {
+                            "container": "plate", 
+                            "location": alp[x]+(y+1).toString()
+			},
+			"to":[			    
 			]
+		    }
 		};
 		var now_v = plane.need[x][y];
 		
@@ -334,25 +331,24 @@ function tableToJson( input, plane ){
 		    for( var y2=0;y2<H;y2++ ){
 			if( used[x2][y2] ) continue;
 			if( plane.kind[x2][y2] == 2 ){
-			    if( input.value[plane.fie[x2][y2]][plane.fie[x][y]] > 0 &&
-			      now_v - input.value[plane.fie[x2][y2]][plane.fie[x][y]] >= 0 ){
+			    if( input.volume[plane.fie[x2][y2]][plane.fie[x][y]] > 0 &&
+			      now_v - input.volume[plane.fie[x2][y2]][plane.fie[x][y]] >= 0 ){
 				  var tot={
 				      "container": "plate", 
-                                      "location": alp[x2]+y2.toString(), 
-                                      "volume": input.value[plane.fie[x2][y2]][plane.fie[x][y]], 
+                                      "location": alp[x2]+(y2+1).toString(), 
+                                      "volume": input.volume[plane.fie[x2][y2]][plane.fie[x][y]], 
                                       "touch-tip": false
 				  };
-				  move.distribute.to.append( tot );
+				  move.distribute.to.push( tot );
+				  used[x2][y2] = true;
 			      }
 			}
 		    }
 		}
-		
-		result.instructions.groups.append( move );
+		result.instructions[0].groups.push( move );
 	    }
 	}
     }
-    
     return result;
 }
 
