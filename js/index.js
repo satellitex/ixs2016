@@ -189,7 +189,8 @@ function solve(input){
     //混合後を配置
     cnt = K;
     for( i=H-1;i>=des1+des2&&cnt>0;i-- ){
-	for( x=0;x<pour[cnt-1];x++){//ここバグあるよ
+	if( pour[cnt-1] > W ) return undefined;
+	for( x=0;x<pour[cnt-1];x++){//ここバグあるよ	    
 	    result.kind[x][i] = 2;
 	    result.fie[x][i] = cnt-1;
 	}
