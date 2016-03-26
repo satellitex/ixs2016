@@ -14,6 +14,9 @@ $(document).ready(function() {
     for (var i=0 ; i<=96 ; i++){
 		$("select.controll").append("<option value="+i+">"+i+"</option>");
     };
+    for (var i=1 ; i<9 ; i++) {
+    	$("select.material").append("<option value="+i+">"+i+"</option>");
+    }
     for (var i=0 ; i<12 ; i++){
         $("tbody.plate").append("<tr class='plate "+i+"'></tr>");
     };
@@ -26,7 +29,7 @@ $(document).ready(function() {
     $("input.material").keypress(function(e){
 	if ( e.which == 13 ) {
 	    $("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
-	    $("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+	    $("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='number' name='namae' maxlength='20'>μl</div>");
 
 	    input.sname.push($("input.material").val());
 	    input.color.push(color++);
@@ -41,7 +44,7 @@ $(document).ready(function() {
     });
     $("button.material").click(function(){
 	$("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
-	$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+	$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='number' name='namae' maxlength='20'>μl</div>");
 
 	input.sname.push($("input.material").val());
 	input.color.push(color++);
@@ -53,12 +56,12 @@ $(document).ready(function() {
 	var text = "<tr><th>";
 	var mate = [];
 	$("input.material_value").each(function(){
-	    text+=$(this).parent().children("div.material_name").text()+" : "+$(this).val()+"     ";
+	    text+=$(this).parent().children("div.material_name").text()+" : "+$(this).val()+" ,   ";
 	    mate.push(Number($(this).val()));
 	});
-	input.pour.push(mate.pop());
+	input.pour.push(Number($("select.material").val()));
 	input.volume.push(mate);
-	text+="</th></tr>";
+	text+="計"+$("select.material").val()+"個</th></tr>";
 	$("tbody.product_list").append(text);
 	input.K++;
     });
@@ -85,7 +88,6 @@ $(document).ready(function() {
 				table.attr('title',title_text);
 			};
 			if (tableInfo.kind[table_j][table_i] === 2) {
-				console.log(tableInfo.color[table_j][table_i].toString(16));
 				var title_text = '生成物';
 				table.css("background-color","#"+("00000"+tableInfo.color[table_j][table_i].toString(16)).substr(("00000"+tableInfo.color[table_j][table_i].toString(16)).length-6));
 				for (var i=0; i<input.M ; i++) {

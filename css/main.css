@@ -19,6 +19,11 @@ div.product_list {
 	font-size: 16px;
 	font-weight: bold;
 }
+.question_name_select {
+	border-bottom: 1px solid;
+	font-size: 16px;
+	font-weight: bold;
+}
 .project_left {
 	float: left;
 	font-size: 18px;
