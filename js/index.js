@@ -73,7 +73,7 @@ $(document).ready(function() {
 	var table_j = 0;
 	for (table_i=0 ; table_i<12 ; table_i++) {
 		for (table_j=0 ; table_j<8 ; table_j++) {
-			var table = $($("tr."+table_i).children()[table_j]);
+			var table = $($("tr."+(11-table_i)).children()[table_j]);
 			if (tableInfo.kind[table_j][table_i] === 0) {
 				table.css("background-color","#"+("00000"+tableInfo.color[table_j][table_i].toString(16)).substr(("00000"+tableInfo.color[table_j][table_i].toString(16)).length-6));
 				table.attr('title','コントロール');
