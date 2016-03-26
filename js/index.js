@@ -318,6 +318,8 @@ function tableToJson( input, plane ){
 	for( y=0;y<H;y++ ){
 	    if( plane.kind[x][y] == 1 ){//素材である。
 
+		var move;
+		
 		for( var x2=0;x2<W;x2++ ){
 		    for( var y2=0;y2<H;y2++ ){
 			if( used[x2][y2] ) continue;
