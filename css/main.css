@@ -1,15 +1,32 @@
-html {
-	font-size: 20px;
-}
 th {
 	width: 25px;
 	height: 25px;
+	font-size: 16px;
+	font-weight: normal;
+}
+select.controll {
+	margin-left: 20px;
+}
+div.material_list {
+	font-size: 16px;
+}
+div.product_list {
+	font-size: 16px;
+}
+.question_name {
+	border-bottom: 1px dashed;
+	font-size: 16px;
 }
 .project_left {
 	float: left;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 5px;
 }
 .project_right {
 	float: right;
+	font-size: 16px;
+	margin: 4px;
 }
 button.add {
     background: #4167fc;
@@ -78,8 +95,12 @@ a.nav {
 }
 .strong {
 	font-weight: bold;
+	font-size: 18px;
     font-family: "Tron-Strong" !important;
 }
 .right {
     float: right !important;
+}
+.left {
+    float: left !important;
 }
