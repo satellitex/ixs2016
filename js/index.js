@@ -11,7 +11,7 @@ $(document).ready(function() {
     input.volume = [];
     input.pour = [];
 
-    for (var i=0 ; i<=96 ; i++){
+    for (var i=0 ; i<9 ; i++){
 		$("select.controll").append("<option value="+i+">"+i+"</option>");
     };
     for (var i=1 ; i<9 ; i++) {
