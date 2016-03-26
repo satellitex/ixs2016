@@ -22,14 +22,14 @@ $(document).ready(function() {
 	};
 	$("input.material").keypress(function(e){
 		if ( e.which == 13 ) {
-			$("table.material").append("<tr><td>"+$("input.material").val()+"</td></tr>");
-			$("div.product_name").append("<div class='col-sm-4'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+		$("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
+		$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
 
-			input.sname.push($("input.material").val());
-			input.color.push(color++);
-			input.M++;
+		input.sname.push($("input.material").val());
+		input.color.push(color++);
+		input.M++;
 
-			$("input.material").val("")
+		$("input.material").val("")
 			return false;
 		}
 	});
@@ -38,7 +38,7 @@ $(document).ready(function() {
 	});
 	$("button.material").click(function(){
 		$("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
-		$("div.product_name").append("<div class='col-sm-4'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+		$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
 
 		input.sname.push($("input.material").val());
 		input.color.push(color++);
@@ -47,15 +47,16 @@ $(document).ready(function() {
 		$("input.material").val("")
 	});
 	$("button.product").click(function(){
-		$("tbody.product").append("<tr><td>");
-		var mate = []
+		var text = "<tr><th>";
+		var mate = [];
 		$("input.material_value").each(function(){
-			$("tbody.product").append($(this).parent().children("div.material_name").text()+" : "+$(this).val()+"     ");
+			text+=$(this).parent().children("div.material_name").text()+" : "+$(this).val()+"     ";
 			mate.push(Number($(this).val()));
 		});
 		input.pour.push(mate.pop());
 		input.volume.push(mate);
-		$("tbody.product").append("</td></tr>");
+		text+="</th></tr>";
+		$("tbody.product_list").append(text);
 		input.K++;
 	});
 	$("button.code").click(function(){

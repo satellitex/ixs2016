@@ -6,6 +6,7 @@ th {
 }
 select.controll {
 	margin-left: 20px;
+	margin: 10px;
 }
 div.material_list {
 	font-size: 16px;
@@ -16,6 +17,7 @@ div.product_list {
 .question_name {
 	border-bottom: 1px dashed;
 	font-size: 16px;
+	font-weight: bold;
 }
 .project_left {
 	float: left;
@@ -41,6 +43,16 @@ button.add {
     color: #FDFDFD;
     background: #0f3ffb;
     cursor: pointer;
+}
+button.product {
+    margin: 30px;
+    width: 70px;
+    height: 35px;
+}
+button.material {
+    margin: 30px;
+    width: 70px;
+    height: 35px;
 }
 button.code {
 	width: 300px;
@@ -103,4 +115,8 @@ a.nav {
 }
 .left {
     float: left !important;
+}
+.name {
+	font-size: 16px;
+	margin: 13px;
 }
