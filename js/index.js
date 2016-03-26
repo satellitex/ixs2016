@@ -14,6 +14,12 @@ $(document).ready(function() {
 	for (var i=0 ; i<=96 ; i++){
 		$("select.controll").append("<option value="+i+">"+i+"</option>");
 	};
+	for (var i=0 ; i<12 ; i++){
+        $("tbody.plate").append("<tr class='plate'></tr>");
+	};
+	for (var i=0 ; i<8 ; i++){
+		$("tr.plate").append("<th>&nbsp;</th>");
+	};
 	$("button.controll").click(function(){
 		$("p.controll").append("コントロール: <input type='text' name='namae' maxlength='20'>");
 	});
