@@ -11,15 +11,56 @@ $(document).ready(function() {
     input.volume = [];
     input.pour = [];
 
+	// function simple_tooltip(target_items, name){
+	//  $(target_items).each(function(i){
+	// 		$("body").append("<div class='"+name+"' id='"+name+i+"'><p>"+$(this).attr('title')+"</p></div>");
+	// 		var my_tooltip = $("#"+name+i);
+			
+	// 		if($(this).attr("title") != "" && $(this).attr("title") != "undefined" ){
+			
+	// 		$(this).removeAttr("title").mouseover(function(){
+	// 					my_tooltip.css({opacity:0.8, display:"none"}).fadeIn(400);
+	// 		}).mousemove(function(kmouse){
+	// 				var border_top = $(window).scrollTop(); 
+	// 				var border_right = $(window).width();
+	// 				var left_pos;
+	// 				var top_pos;
+	// 				var offset = 20;
+	// 				if(border_right - (offset *2) >= my_tooltip.width() + kmouse.pageX){
+	// 					left_pos = kmouse.pageX+offset;
+	// 					} else{
+	// 					left_pos = border_right-my_tooltip.width()-offset;
+	// 					}
+						
+	// 				if(border_top + (offset *2)>= kmouse.pageY - my_tooltip.height()){
+	// 					top_pos = border_top +offset;
+	// 					} else{
+	// 					top_pos = kmouse.pageY-my_tooltip.height()-offset;
+	// 					}	
+					
+					
+	// 				my_tooltip.css({left:left_pos, top:top_pos});
+	// 		}).mouseout(function(){
+	// 				my_tooltip.css({left:"-9999px"});				  
+	// 		});
+			
+	// 		}
+	 
+	// 	});
+	// }
+
     for (var i=0 ; i<=96 ; i++){
-	$("select.controll").append("<option value="+i+">"+i+"</option>");
+		$("select.controll").append("<option value="+i+">"+i+"</option>");
     };
     for (var i=0 ; i<12 ; i++){
-        $("tbody.plate").append("<tr class='plate'></tr>");
+        $("tbody.plate").append("<tr class='plate "+i+"'></tr>");
     };
     for (var i=0 ; i<8 ; i++){
-	$("tr.plate").append("<th>&nbsp;</th>");
+		$("tr.plate").append("<th title='' class='"+i+"''>&nbsp;</th>");
     };
+    $("th").popover({
+	    trigger: 'hover'
+	})
     $("input.material").keypress(function(e){
 	if ( e.which == 13 ) {
 	    $("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
@@ -62,11 +103,36 @@ $(document).ready(function() {
     $("button.code").click(function(){
 	var POT_VOLUME_MAX = 300;
 	input.N = Number($("select.controll").val());
-	console.log(input);
 
 	//solve()
 	var tableInfo = solve(input);
 	var runJson = tableToJson( input, tableInfo );
+	var table_i = 0;
+	var table_j = 0;
+	for (table_i=0 ; table_i<12 ; table_i++) {
+		for (table_j=0 ; table_j<8 ; table_j++) {
+			var table = $($("tr."+table_i).children()[table_j]);
+			if (tableInfo.kind[table_j][table_i] === 0) {
+				table.css("background-color","#"+("00000"+tableInfo.color[table_j][table_i].toString(16)).substr(("00000"+tableInfo.color[table_j][table_i].toString(16)).length-6));
+				table.attr('title','コントロール');
+			};
+			if (tableInfo.kind[table_j][table_i] === 1) {
+				table.css("background-color","#"+("00000"+tableInfo.color[table_j][table_i].toString(16)).substr(("00000"+tableInfo.color[table_j][table_i].toString(16)).length-6));
+				var title_text = '原料:';
+				title_text+=input.sname[tableInfo.fie[table_j][table_i]]
+				table.attr('title',title_text);
+			};
+			if (tableInfo.kind[table_j][table_i] === 2) {
+				console.log(tableInfo.color[table_j][table_i].toString(16));
+				var title_text = '生成物';
+				table.css("background-color","#"+("00000"+tableInfo.color[table_j][table_i].toString(16)).substr(("00000"+tableInfo.color[table_j][table_i].toString(16)).length-6));
+				for (var i=0; i<input.M ; i++) {
+					title_text+=",  "+input.sname[i]+" : "+input.volume[tableInfo.fie[table_j][table_i]][i]+"μl";
+				};
+				table.attr('title',title_text);
+			};
+		};
+	};
 
 	//このへんてきとーだよ
 	var downloadFile = JSON.stringify(runJson);
@@ -115,7 +181,9 @@ function solve(input){
     var color = new Array(M);
     for( var i=0; i < M; i++){
 	sname[i] = input.sname[i];
-	color[i] = input.color[i];
+	//random now- > _ <
+	color[i] = Math.floor(Math.random()*0xFFFFFF);
+	//input.color[i];
     }
 
 
@@ -155,7 +223,6 @@ function solve(input){
 	result["color"][x] = new Array(H);
 	for( var y=0;y<H;y++ ){
 	    result["kind"][x][y] = -1;
-	    result["color"][x][y] = 0x101010;
 	}
     }
 
@@ -221,17 +288,21 @@ function solve(input){
 
     for( x=0; x<W; x++ ){
 	for( y=0;y<H;y++ ){
+		result["color"][x][y]=0;
 	    if( result.kind[x][y] == 0 ){
 		result.color[x][y] = 0xFF0000;
 	    } else if( result.kind[x][y] == 1 ){
-		result.color[x][y] = input.color[ result.fie[x][y] ];
+		result.color[x][y] = color[ result.fie[x][y] ];
 	    } else if( result.kind[x][y] == 2 ){
 		for( i=0;i<M;i++ ){
 		    if( volume[result.fie[x][y]][i] > 0 )
-			result.color[x][y] += input.color[ i ];
+			result.color[x][y] += color[ i ]*volume[result.fie[x][y]][i];
+			result.color[x][y] %= 0x1000000;
+
 		}
-		result.color[x][y] %= 0x1000000;
-	    } 
+	    } else {
+	        result["color"][x][y] = 0x101010;
+	    }
 	}
     }
 
