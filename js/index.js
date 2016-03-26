@@ -50,12 +50,11 @@ $(document).ready(function() {
 		input.N = Number($("select.controll").val());
 		console.log(input);
 
-		//solve()
-		console.log(solve(input));
+	    //solve()
+	    var xxx = solve(input);
+	    console.log( tableToJson(input,xxx) );
 	});
 });
-
-
 
 
 const POT_VOLUME_MAX = 300; //試験官のサイズ300μl
@@ -301,8 +300,7 @@ function tableToJson( input, plane ){
 		"instructions": [
 		    {
 			"tool": "p1000", 
-			"groups": [
-			]
+			"groups": []
 		    }
 		]
 	    };
@@ -318,15 +316,15 @@ function tableToJson( input, plane ){
     for( x=0;x<W;x++ ){
 	for( y=0;y<H;y++ ){
 	    if( plane.kind[x][y] == 1 ){//素材である。
-		var move = new Array();
-		move["distribute"] = {
-		    "from": {
-                        "container": "plate", 
-                        "location": alp[x]+y.toString()
-		    },
-		    "to":[
-			
+		var move = {
+		    "distribute": {
+			"from": {
+                            "container": "plate", 
+                            "location": alp[x]+y.toString()
+			},
+			"to":[			    
 			]
+		    }
 		};
 		var now_v = plane.need[x][y];
 		
@@ -342,17 +340,17 @@ function tableToJson( input, plane ){
                                       "volume": input.value[plane.fie[x2][y2]][plane.fie[x][y]], 
                                       "touch-tip": false
 				  };
-				  move.distribute.to.append( tot );
+				  console.log( "ok" );
+				  move.distribute.to.push( tot );
 			      }
 			}
 		    }
 		}
-		
-		result.instructions.groups.append( move );
+		console.log( result.instructions[0].groups );
+		result.instructions[0].groups.push( move );
 	    }
 	}
     }
-    
     return result;
 }
 
