@@ -11,44 +11,6 @@ $(document).ready(function() {
     input.volume = [];
     input.pour = [];
 
-	// function simple_tooltip(target_items, name){
-	//  $(target_items).each(function(i){
-	// 		$("body").append("<div class='"+name+"' id='"+name+i+"'><p>"+$(this).attr('title')+"</p></div>");
-	// 		var my_tooltip = $("#"+name+i);
-			
-	// 		if($(this).attr("title") != "" && $(this).attr("title") != "undefined" ){
-			
-	// 		$(this).removeAttr("title").mouseover(function(){
-	// 					my_tooltip.css({opacity:0.8, display:"none"}).fadeIn(400);
-	// 		}).mousemove(function(kmouse){
-	// 				var border_top = $(window).scrollTop(); 
-	// 				var border_right = $(window).width();
-	// 				var left_pos;
-	// 				var top_pos;
-	// 				var offset = 20;
-	// 				if(border_right - (offset *2) >= my_tooltip.width() + kmouse.pageX){
-	// 					left_pos = kmouse.pageX+offset;
-	// 					} else{
-	// 					left_pos = border_right-my_tooltip.width()-offset;
-	// 					}
-						
-	// 				if(border_top + (offset *2)>= kmouse.pageY - my_tooltip.height()){
-	// 					top_pos = border_top +offset;
-	// 					} else{
-	// 					top_pos = kmouse.pageY-my_tooltip.height()-offset;
-	// 					}	
-					
-					
-	// 				my_tooltip.css({left:left_pos, top:top_pos});
-	// 		}).mouseout(function(){
-	// 				my_tooltip.css({left:"-9999px"});				  
-	// 		});
-			
-	// 		}
-	 
-	// 	});
-	// }
-
     for (var i=0 ; i<=96 ; i++){
 		$("select.controll").append("<option value="+i+">"+i+"</option>");
     };
@@ -85,7 +47,7 @@ $(document).ready(function() {
 	input.color.push(color++);
 	input.M++;
 
-	$("input.material").val("")
+	$("input.material").val("");
     });
     $("button.product").click(function(){
 	var text = "<tr><th>";
@@ -119,7 +81,7 @@ $(document).ready(function() {
 			if (tableInfo.kind[table_j][table_i] === 1) {
 				table.css("background-color","#"+("00000"+tableInfo.color[table_j][table_i].toString(16)).substr(("00000"+tableInfo.color[table_j][table_i].toString(16)).length-6));
 				var title_text = '原料:';
-				title_text+=input.sname[tableInfo.fie[table_j][table_i]]
+			    title_text+=input.sname[tableInfo.fie[table_j][table_i]];
 				table.attr('title',title_text);
 			};
 			if (tableInfo.kind[table_j][table_i] === 2) {
@@ -400,8 +362,11 @@ function tableToJson( input, plane ){
     var used = new Array( W );
     for( var x = 0; x<W; x++ ){
 	used[x] = new Array(H);
-	for( var y=0;y<H;y++ )
-	    used[x][y] = false;
+	for( var y=0;y<H;y++ ){
+	    used[x][y] = new Array( input.M );
+	    for( var i=0;i<input.M;i++ )
+		used[x][y][i] = true;
+	}
     }
 
     var alp="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -422,7 +387,7 @@ function tableToJson( input, plane ){
 		
 		for( var x2=0;x2<W;x2++ ){
 		    for( var y2=0;y2<H;y2++ ){
-			if( used[x2][y2] ) continue;
+			if( used[x2][y2][plane.fie[x][y]] ) continue;
 			if( plane.kind[x2][y2] == 2 ){
 			    if( input.volume[plane.fie[x2][y2]][plane.fie[x][y]] > 0 &&
 				now_v - input.volume[plane.fie[x2][y2]][plane.fie[x][y]] >= 0 ){
@@ -433,7 +398,7 @@ function tableToJson( input, plane ){
 					"touch-tip": false
 				    };
 				    move.distribute.to.push( tot );
-				    used[x2][y2] = true;
+				    used[x2][y2][plane.fie[x][y]] = true;
 				}
 			}
 		    }
