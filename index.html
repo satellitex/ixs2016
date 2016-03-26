@@ -15,19 +15,25 @@
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <div class="col-sm-2"></div>
     <dvi class="col-sm-8">
-        <p class="controll">
+        <nav>
+            <a class="nav strong" href="#">OpenTrons Editor</a>
+            <a class="nav right strong" href="http://www.opentrons.com">OpenTrons</a>
+        </nav>
+
+        <div class="controll">
             <dvi class="col-sm-2">コントロール</dvi>
                 <select class="controll">
             </select>
-        </p>
+        </div>
 
-        <p class="material">
-            <dvi class="col-sm-1">原料 : </dvi>
+        <div class="material">
+            <dvi class="col-sm-2">原料 : </dvi>
             <div class="col-sm-3">
                 <input type='text' class='material' name='namae' maxlength='20'>
             </div>
             <button type="button" class="btn material">追加</button>
-        </p>
+            <div class="col-sm-8"></div>
+        </div>
         <div class="col-sm-12">
             <table class="material col-sm-12" border=1>
                 <tbody class="material">
@@ -36,11 +42,11 @@
             </table>
         </div>
 
-        <p class="product">
+        <div class="product">
             <dvi class="col-sm-12 product">
                 生成物
             </dvi>
-        </p>
+        </div>
         <div class="col-sm-12"><div class="material_name">数量</div><input class="material_value" type='text' name='namae' maxlength='20'>個<button type="button" class="btn product">Add</button>
         </div>
         <div class="col-sm-12">
