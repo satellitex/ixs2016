@@ -51,8 +51,15 @@ $(document).ready(function() {
 		console.log(input);
 
 	    //solve()
-	    var xxx = solve(input);
-	    console.log( tableToJson(input,xxx) );
+	    var tableInfo = solve(input);
+	    var runJson = tableToJson( input, tableInfo );
+
+	    //このへんてきとーだよ
+	    var downloadFile = JSON.stringify(runJson);
+	    var a = $(".download_link");
+	    var url = window.URL.createObjectURL(new Blob([downloadFile], {type: 'text.plain'}));
+	    a.attr( 'download', $('#project_name').val()+".json" );
+	    a.attr( 'href', url );	    	    
 	});
 });
 
