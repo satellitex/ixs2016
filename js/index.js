@@ -1,84 +1,84 @@
 $(document).ready(function() {
-	var self = this;
-	var input = {};
-	var color = 0;
-	input.W = 8;
-	input.H = 12;
-	input.M = 0;
-	input.K = 0;
-	input.sname = [];
-	input.color = [];
-	input.volume = [];
-	input.pour = []
+    var self = this;
+    var input = {};
+    var color = 0;
+    input.W = 8;
+    input.H = 12;
+    input.M = 0;
+    input.K = 0;
+    input.sname = [];
+    input.color = [];
+    input.volume = [];
+    input.pour = [];
 
-	for (var i=0 ; i<=96 ; i++){
-		$("select.controll").append("<option value="+i+">"+i+"</option>");
-	};
-	for (var i=0 ; i<12 ; i++){
+    for (var i=0 ; i<=96 ; i++){
+	$("select.controll").append("<option value="+i+">"+i+"</option>");
+    };
+    for (var i=0 ; i<12 ; i++){
         $("tbody.plate").append("<tr class='plate'></tr>");
-	};
-	for (var i=0 ; i<8 ; i++){
-		$("tr.plate").append("<th>&nbsp;</th>");
-	};
-	$("input.material").keypress(function(e){
-		if ( e.which == 13 ) {
-		$("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
-		$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+    };
+    for (var i=0 ; i<8 ; i++){
+	$("tr.plate").append("<th>&nbsp;</th>");
+    };
+    $("input.material").keypress(function(e){
+	if ( e.which == 13 ) {
+	    $("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
+	    $("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
 
-		input.sname.push($("input.material").val());
-		input.color.push(color++);
-		input.M++;
+	    input.sname.push($("input.material").val());
+	    input.color.push(color++);
+	    input.M++;
 
-		$("input.material").val("")
-			return false;
-		}
+	    $("input.material").val("");
+	    return false;
+	}
+    });
+    $("button.controll").click(function(){
+	$("div.controll").append("コントロール: <input type='text' name='namae' maxlength='20'>");
+    });
+    $("button.material").click(function(){
+	$("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
+	$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+
+	input.sname.push($("input.material").val());
+	input.color.push(color++);
+	input.M++;
+
+	$("input.material").val("")
+    });
+    $("button.product").click(function(){
+	var text = "<tr><th>";
+	var mate = [];
+	$("input.material_value").each(function(){
+	    text+=$(this).parent().children("div.material_name").text()+" : "+$(this).val()+"     ";
+	    mate.push(Number($(this).val()));
 	});
-	$("button.controll").click(function(){
-		$("div.controll").append("コントロール: <input type='text' name='namae' maxlength='20'>");
-	});
-	$("button.material").click(function(){
-		$("table.material").append("<tr><th>"+$("input.material").val()+"</th></tr>");
-		$("div.product_name").append("<div class='left name'><div class='material_name'>"+$("input.material").val()+"</div><input class='material_value' type='text' name='namae' maxlength='20'>μl</div>");
+	input.pour.push(mate.pop());
+	input.volume.push(mate);
+	text+="</th></tr>";
+	$("tbody.product_list").append(text);
+	input.K++;
+    });
+    $("button.code").click(function(){
+	var POT_VOLUME_MAX = 300;
+	input.N = Number($("select.controll").val());
+	console.log(input);
 
-		input.sname.push($("input.material").val());
-		input.color.push(color++);
-		input.M++;
+	//solve()
+	var tableInfo = solve(input);
+	var runJson = tableToJson( input, tableInfo );
 
-		$("input.material").val("")
-	});
-	$("button.product").click(function(){
-		var text = "<tr><th>";
-		var mate = [];
-		$("input.material_value").each(function(){
-			text+=$(this).parent().children("div.material_name").text()+" : "+$(this).val()+"     ";
-			mate.push(Number($(this).val()));
-		});
-		input.pour.push(mate.pop());
-		input.volume.push(mate);
-		text+="</th></tr>";
-		$("tbody.product_list").append(text);
-		input.K++;
-	});
-	$("button.code").click(function(){
-		var POT_VOLUME_MAX = 300;
-		input.N = Number($("select.controll").val());
-		console.log(input);
-
-	    //solve()
-	    var tableInfo = solve(input);
-	    var runJson = tableToJson( input, tableInfo );
-
-	    //このへんてきとーだよ
-	    var downloadFile = JSON.stringify(runJson);
-	    var a = $(".download_link");
-	    var url = window.URL.createObjectURL(new Blob([downloadFile], {type: 'text.plain'}));
-	    a.attr( 'download', $('#project_name').val()+".json" );
-	    a.attr( 'href', url );	    	    
-	});
+	//このへんてきとーだよ
+	var downloadFile = JSON.stringify(runJson);
+	var a = $(".download_link");
+	var url = window.URL.createObjectURL(new Blob([downloadFile], {type: 'text.plain'}));
+	a.attr( 'download', $('#project_name').val()+".json" );
+	a.attr( 'href', url );	    	    
+    });
 });
 
 
-const POT_VOLUME_MAX = 300; //試験官のサイズ300μl
+var POT_VOLUME_MAX = 300; //試験官のサイズ300μl
 
 
 // input is jsonObject
@@ -241,13 +241,13 @@ function solve(input){
 
 
 //ピペットの名前
-const Pipette_Name = "p1000-rack";
+var Pipette_Name = "p1000-rack";
 //ピペットの labware
-const Tiprack_1000 = "tiprack-1000ul";
+var Tiprack_1000 = "tiprack-1000ul";
 //plateのlabware
-const Plate_labware = "96-PCR-flat";
+var Plate_labware = "96-PCR-flat";
 //ピペット1000
-const Pipette1000 = "p1000";
+var Pipette1000 = "p1000";
 //これはフィールドにある溶液の種類とかから移動のjsonを出力するましーーーんです。
 // input is json
 /*
@@ -264,23 +264,23 @@ function tableToJson( input, plane ){
     var result = 
 	    {
 		"deck" : {
-		    Pipette_Name : {
+		    "p1000-rack" : {
 			"labware" : Tiprack_1000
-		    },
-		    "trash" : {
-			"labware" : "point"
 		    },
 		    "plate" : {
 			"labware" : Plate_labware
+		    },
+		    "trash" : {
+			"labware" : "point"
 		    }
 		},
 		
 		"head" : {
-		    Pipette1000 : {
+		    p1000 : {
       			"tool" : "pipette",
       			"tip-racks" : [
         		    {
-       		   		"container" : Tiprack_1000
+       		   		"container" : Pipette_Name
         		    }
       			],
 			"trash-container": {
@@ -317,6 +317,7 @@ function tableToJson( input, plane ){
 		    }
 		},
 		
+		"ingredients": {}, 
 		"instructions": [
 		    {
 			"tool": "p1000", 
@@ -353,16 +354,16 @@ function tableToJson( input, plane ){
 			if( used[x2][y2] ) continue;
 			if( plane.kind[x2][y2] == 2 ){
 			    if( input.volume[plane.fie[x2][y2]][plane.fie[x][y]] > 0 &&
-			      now_v - input.volume[plane.fie[x2][y2]][plane.fie[x][y]] >= 0 ){
-				  var tot={
-				      "container": "plate", 
-                                      "location": alp[x2]+(y2+1).toString(), 
-                                      "volume": input.volume[plane.fie[x2][y2]][plane.fie[x][y]], 
-                                      "touch-tip": false
-				  };
-				  move.distribute.to.push( tot );
-				  used[x2][y2] = true;
-			      }
+				now_v - input.volume[plane.fie[x2][y2]][plane.fie[x][y]] >= 0 ){
+				    var tot={
+					"container": "plate", 
+					"location": alp[x2]+(y2+1).toString(), 
+					"volume": input.volume[plane.fie[x2][y2]][plane.fie[x][y]], 
+					"touch-tip": false
+				    };
+				    move.distribute.to.push( tot );
+				    used[x2][y2] = true;
+				}
 			}
 		    }
 		}
@@ -373,4 +374,4 @@ function tableToJson( input, plane ){
     return result;
 }
 
- 
+
