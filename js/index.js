@@ -68,6 +68,8 @@ $(document).ready(function() {
 	    var tableInfo = solve(input);
 	    var runJson = tableToJson( input, tableInfo );
 
+	    console.log(tableInfo)
+
 	    //このへんてきとーだよ
 	    var downloadFile = JSON.stringify(runJson);
 	    var a = $(".download_link");
